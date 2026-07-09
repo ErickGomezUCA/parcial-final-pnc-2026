@@ -43,8 +43,6 @@ public class MovementService {
         Book book = bookRepository.findByIsbn(dto.getIsbn())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        List<Movement> bookMovements = movementRepository.findByBook(book);
-
         if (!lector.getEmail().equals(dto.getEmail())) {
             throw new RuntimeException("Lector did not borrowed this book");
         }
