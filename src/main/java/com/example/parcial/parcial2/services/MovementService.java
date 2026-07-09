@@ -11,6 +11,7 @@ import com.example.parcial.parcial2.repositories.MovementRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class MovementService {
@@ -42,6 +43,12 @@ public class MovementService {
         Book book = bookRepository.findByIsbn(dto.getIsbn())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
+        List<Movement> bookMovements = movementRepository.findByBook(book);
+
+        if (!lector.getEmail().equals(dto.getEmail())) {
+            throw new RuntimeException("Lector did not borrowed this book");
+        }
+
         if (type == MovementType.BORROWING) {
             if (!book.isAvailable()) {
                 throw new RuntimeException("Book is not available");
@@ -52,6 +59,9 @@ public class MovementService {
             }
         } else {
             book.setAvailableCount(book.getAvailableCount() + 1);
+            if (!book.isAvailable()) {
+                book.setAvailable(true);
+            }
         }
 
         bookRepository.save(book);
