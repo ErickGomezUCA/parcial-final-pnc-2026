@@ -48,7 +48,7 @@ Explicacion:
 1. Para el servicio de movements, al prestar un libro actualiza la cantidad de libros disponibles, si ya no hay libros, entonces actualiza para ese libro que `available = false`, pero, al devolverlo, no regresa que el libro este disponible, a pesar que su `available_count` si increment, si campo `available` se mantiene como `false`. 
 
 Solucion:
-1. `MovementeService.java`: Se checkea que el libro no esta disponible
+1. `MovementService.java`: Se revisa que el libro no esta disponible
 2. En caso de no estarlo, entonces actualizarlo nuevamente a `book.setAvailable(true)`
 
 ---
