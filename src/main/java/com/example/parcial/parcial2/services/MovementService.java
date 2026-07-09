@@ -43,9 +43,7 @@ public class MovementService {
         Book book = bookRepository.findByIsbn(dto.getIsbn())
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        if (!lector.getEmail().equals(dto.getEmail())) {
-            throw new RuntimeException("Lector did not borrowed this book");
-        }
+        List<Movement> movements = movementRepository.findAllByBook(book);
 
         if (type == MovementType.BORROWING) {
             if (!book.isAvailable()) {
@@ -56,6 +54,12 @@ public class MovementService {
                 book.setAvailable(false);
             }
         } else {
+            movements.stream().forEach(m -> {
+                if (!m.getLector().getId().equals(lector.getId())) {
+                    throw new RuntimeException("Lector did not borrow this book");
+                }
+            });
+
             book.setAvailableCount(book.getAvailableCount() + 1);
             if (!book.isAvailable()) {
                 book.setAvailable(true);

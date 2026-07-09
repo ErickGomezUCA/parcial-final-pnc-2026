@@ -127,6 +127,9 @@ Explicacion:
 2. Esto es debido a que en la funcion `createMovement` nunca se esta revisando que el usuarios que esta devolviendo es el mismo que lo ha pedido prestado.
 
 Solucion:
-1. 
+1. `MovementService.java` + `MovementRepository.java`: Obtener todos los movimientos realizados por ese libro
+2. `MovementeService.java`: Al momento de devolver un libro, revisar si el movimiento registrado previo de ese libro coincida con el ID del lector que lo esta devolviendo
+3. En caso que el ID del que pidio prestado no sea igual que el ID del que lo esta devolviendo, lanzar la excepcion para evitar que este pueda devolver un libro que no es suyo.
+4. En caso que si tengan el mismo ID del lector, entonces se puede devolver el libro.
 
 ---

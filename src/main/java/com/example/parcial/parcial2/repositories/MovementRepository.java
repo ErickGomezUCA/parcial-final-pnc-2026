@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface MovementRepository extends JpaRepository<Movement, UUID> {
-    Movement findByBook(Book book);
+    List<Movement> findAllByBook(Book book);
 }
